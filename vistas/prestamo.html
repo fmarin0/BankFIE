@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://kit.fontawesome.com/e11db10689.js" crossorigin="anonymous"></script>
+
+    <title>Prestamo</title>
+</head>
+
+<body>
+    <header class="header">
+        <nav>
+            <div class="icono-menu">
+                <img src="./img/hamburguesa.png" id="icono-menu">
+            </div>
+            <div class="cont-menu active" id="menu">
+                <ul>
+                    <li> Inicio</li>
+                    <li> Perfil </li>
+                    <li> Mensajes </li>
+                    <li> Cerrar Sesion</li>
+                </ul>
+            </div>
+            <script src="app.js"></script>
+        </nav>
+    </header>
+    <div class="encabezado-img">
+            <div class="caja-prestamo">
+                    <h2>Simular Prestamo</h2>
+                    <div class="inputBox2">
+
+                        <input type="number" required="required" id="pesos">
+                        <span>Cantidad en Pesos</span>
+                    </div>
+                    <div class="inputBox2">
+                        <input type="number"  required="required" id="meses">
+                        <span>Meses</span>
+                    </div>
+
+                    <div class="inputBox2">
+                        <input type="number"  required="required" id="interes">
+                        <span>Interes</span>
+                    </div>
+
+                     <button id="btn-abrir-modal"onclick="gen_table();"><span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        Simular Prestamo</button>       
+                </div> 
+
+                
+                    
+                </div>
+
+               
+                <div class="main-container">
+                <table class="tab">
+                    
+                    <thead>
+                        <tr>
+                            <td>#</td>
+                            <td>Capital</td>
+                            <td>Interes</td>
+                            <td>Importe a pagar</td>
+                        </tr>
+                    </thead>
+                    <tbody id="tab">
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td class="ft">TOTAL</td>
+                            <td id="t1"></td>
+                            <td id="t2"></td>
+                            <td id="t3"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>      
+    </div>
+    
+
+<script src="prestamo.js"></script>
+</body>
+</html>
+
+

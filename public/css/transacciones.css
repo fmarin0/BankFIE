@@ -1,0 +1,56 @@
+@import url('./global.css');
+
+
+h1 {
+    text-align: center;
+    color: #fff;
+    padding: 10px;
+    font-size: 30px;
+    margin-top: 10px;
+}
+
+input {
+    padding: 10px;
+    border-radius: 10px;
+    border-style: solid;
+    border-color: #000;
+    border-width: 2px;
+    background-color: #2b3244;
+    color: #fff;
+    font-weight: bold;
+}
+
+button {
+    display: block;
+    margin-top: 25px!important;
+    margin: 0 auto;
+    padding: 15px;
+    background-color: #799754;
+    color: #fff;
+    border-radius: 10px;
+    border-style: none;
+    font-weight: bold;
+} button:hover {
+    background-color: #6f8a4d;
+}
+
+.body-content {
+    width: 50%;
+    min-height: 300px;
+    border-style: none;
+    box-shadow:0 0 15px 1px #102117;
+    border-width: 1px;
+    border-radius: 15px;
+    background-color: #384524;
+}
+
+.form-content {
+    display: flex;
+    padding: 15px;
+    justify-content: center;
+}
+section {
+    display: flex;
+    justify-content: center;
+    margin-top: 10%;
+}

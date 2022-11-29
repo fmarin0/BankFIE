@@ -1,0 +1,56 @@
+@import url('https://site-assets.fontawesome.com/releases/v6.1.1/css/all.css');
+@import url('./nav.css');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+body {  
+    color: #fff;
+    background-color: #2b3244;
+}
+
+.eliminar {
+    background-color: #eb4747;
+    color: #fff;
+    border-style: none;
+    box-shadow:0 0 15px 1px #102117;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.ver {
+    background-color: #209E8B;
+    color: #fff;
+    border-style: none;
+    box-shadow:0 0 15px 1px #102117;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.circle {
+    font-size: small;
+}
+
+.activo {
+    color: #609E3F;
+}
+
+.inactivo {
+    color: #eb4747;
+}
+
+.editar {
+    background-color: #609E3F;
+    color: #fff;
+    border-style: none;
+    box-shadow:0 0 15px 1px #102117;
+    border-radius: 10px;
+    cursor: pointer;
+}
