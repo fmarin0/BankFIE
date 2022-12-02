@@ -16,6 +16,20 @@ section {
     padding: 30px;
 }
 
+.content-customers p {
+    margin-bottom: 10px;
+    background-color: green;
+    border-radius: 10px;
+}
+
+.p-1 {
+    padding: 10px;
+}
+
+.content-customers p span {
+    padding: 20px;
+}
+
 .body-table {
     display: flex;
     justify-content: center;

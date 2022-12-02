@@ -10,7 +10,7 @@
                $query2 = $connect -> connect() -> prepare('INSERT INTO clientes (name, NoCuenta, email, curp, pass) VALUES (:name, :NoCuenta, :email, :curp, :pass)');
                $query2 -> execute([
                    'name'       => $_POST['nombre'],
-                   'NoCuenta'   => getNumEjecutivo() . '-' . date('Y-m-d'),
+                   'NoCuenta'   => getNumEjecutivo() . '-' . date('Ymdis'),
                    'email'      => $_POST['email'],
                    'curp'       => $_POST['curp'],
                    'pass'       => password_hash($_POST['pass'], PASSWORD_BCRYPT)
