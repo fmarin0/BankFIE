@@ -41,7 +41,7 @@
                                 <td>
                                     <form action="#" id="formEditar'. $cliente -> id .'">
                                         <input type="hidden" name="editar" value="'.$cliente -> id .'">
-                                        <button type="button" onclick="modalOpen()" class="ver"><i class="fa-light fa-eye"></i></button>
+                                        <button type="button" onclick="modalOpen('.$cliente -> id .')" class="ver"><i class="fa-light fa-eye"></i></button>
                                     </form>
                                 </td>
                                 <td>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 02-12-2022 a las 15:03:34
+-- Tiempo de generación: 04-12-2022 a las 14:47:44
 -- Versión del servidor: 8.0.31-0ubuntu0.22.04.1
 -- Versión de PHP: 8.1.2-1ubuntu2.9
 
@@ -29,23 +29,27 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `clientes` (
   `id` int NOT NULL,
-  `name` varchar(250) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `NoCuenta` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(250) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `curp` varchar(250) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `pass` varchar(250) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` enum('activo','inactivo') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `rol` enum('cliente','ejecutivo') COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `NoCuenta` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `fena` date NOT NULL,
+  `curp` varchar(19) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `imgClient` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `domicilio` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `codPostal` int NOT NULL,
+  `estado` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `municipio` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `pass` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `role` enum('user','admin') NOT NULL,
+  `status` enum('activo','pendiente') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Volcado de datos para la tabla `clientes`
 --
 
-INSERT INTO `clientes` (`id`, `name`, `NoCuenta`, `email`, `curp`, `pass`, `status`, `rol`) VALUES
-(1, 'Jesús Emmanuel Hernández Torres', 'A-20221127', 'jesus@gmail.com', 'HETJ030815HDFRRSA3', '$2y$10$cGs7znRmwKCjWohFGmT10Olt8nosB1ig5N2uOSHpL/qPy0xZL82tS', 'inactivo', 'cliente'),
-(4, 'jesus', 'A-20221128', 'jesus@gmail.com', 'HETJ030815HDFRRSZX', '$2y$10$tRgn/i6lYDKXBdQw.axCN.DzVvuhU9miHLuZJk7LcUYQYmlfKtl62', 'activo', 'cliente'),
-(5, 'YO', 'A-20221128', 'yo@gmail.com', '0123456789ABCDEFGH', '$2y$10$EVSMpK.rlWoEghYVy.akNunmWcdpYjtvAR9TgcpUChGxgzfgsAZoS', 'activo', 'cliente');
+INSERT INTO `clientes` (`id`, `NoCuenta`, `name`, `fena`, `curp`, `imgClient`, `domicilio`, `codPostal`, `estado`, `municipio`, `email`, `pass`, `role`, `status`) VALUES
+(1, 'A-20221128', 'Fátima Naomi Marin Meza', '2002-09-15', 'HETJ030815HDFRRSA3', 'avatar.jpg', 'Calle valle de las granadas #279', 28865, 'Colima', 'Manzanillo', 'jeus@gmail.com', '$2y$10$cGs7znRmwKCjWohFGmT10Olt8nosB1ig5N2uOSHpL/qPy0xZL82tS', 'user', 'activo');
 
 -- --------------------------------------------------------
 
@@ -55,7 +59,7 @@ INSERT INTO `clientes` (`id`, `name`, `NoCuenta`, `email`, `curp`, `pass`, `stat
 
 CREATE TABLE `prestamo` (
   `id` int NOT NULL,
-  `NoCuenta` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `NoCuenta` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `cantidad` double NOT NULL,
   `fecha` date NOT NULL,
   `interes` double NOT NULL
@@ -69,21 +73,21 @@ CREATE TABLE `prestamo` (
 
 CREATE TABLE `users` (
   `id` int NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `fena` date NOT NULL,
-  `curp` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `img_client` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `domicilio` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `curp` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `img_client` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `domicilio` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `codPostal` int NOT NULL,
-  `estado` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `municipio` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `pais` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `estado` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `municipio` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `pais` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `tel` bigint NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `pass` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `num_client` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `role` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` enum('activo','inactivo') COLLATE utf8mb4_unicode_ci NOT NULL
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `pass` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `num_client` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `role` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` enum('activo','inactivo') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -117,7 +121,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `users`

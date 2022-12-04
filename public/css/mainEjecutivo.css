@@ -75,7 +75,7 @@ table td {
     background-color: #2b3244;
 }
 
-form button {
+table button {
     width: 100%;
     height: auto;
     padding: 5px;   
@@ -96,3 +96,4 @@ td span {
     border-radius: 10px;
     margin-bottom: 15px;
 }
+

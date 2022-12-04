@@ -42,8 +42,8 @@
         </div>
     </section>
     <div id="modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
+        <div class="modal-content" id="content">
+            <div class="head">
                 <div class="title">
                     <h2>Cliente <span id="NoCuenta"></span></h2>
                 </div>
@@ -52,12 +52,54 @@
                 </div>
             </div>
             <div class="modal-body">
-                <div class="avatar">
-                    <img src="./../public/img/avatar.jpeg" alt="Imagen del cliente" title="Imagen del cliente">
+                <div class="respuestas-editar">
+                    <ul id="respuestas">
+                        
+                    </ul>
                 </div>
-                <div class="align-right">
-                    <button type="button" id="btn-editar">Editar</button>
-                </div>
+                <form action="#" id="FormEditar">
+                    <input type="hidden" name="key" id="key" value="">
+                    <div class="avatar">
+                        <div id="setImg">
+                            
+                        </div>
+                        <label for="img_client" class="btn-edit-img disabled" id="img-btn"> 
+                            <span id="img"><i class="fa-solid fa-pen-to-square"></i></span>
+                        </label> 
+                    </div>
+                    <input type="file" name="img_client" id="img_client">
+                    <div class="align-center">
+                        <label for="name" id="label-name">Nombre completo</label>
+                        <input type="text" name="name" id="name" value="" disabled>
+                        <label for="CURP" id="label-CURP">CURP</label>
+                        <input type="text" name="CURP" id="CURP" value="" disabled>
+                    </div>
+                    <div class="columnas">
+                        <div class="columana">
+                            <label for="fena">Fecha de nacimiento</label>
+                            <input type="text" name="fena" id="fena" value="" disabled>
+                            <label for="estado">Estado</label>
+                            <input type="text" name="estado" id="estado" value="" disabled>
+                            <label for="domicilio">Domicilio</label>
+                            <input type="text" name="domicilio" id="domicilio" value="" disabled>
+                        </div>
+                        <div class="columana">
+                            <label for="edad">Edad</label>
+                            <input type="text" name="edad" id="edad" value="" disabled>
+                            <label for="municipio">Municipio</label>
+                            <input type="text" name="municipio" id="municipio" value="" disabled>
+                            <label for="codPostal">C.P.</label>
+                            <input type="text" name="codPostal" id="codPostal" value="" disabled>
+                        </div>
+                    </div>
+                    <div class="align-right">
+                        <button type="button" id="btn-submit" class="disabled btn-enviar">Guardar</button>
+                    </div>
+                </form>
+            </div>
+            <div class="align-right">
+                <button type="button" id="btn-editar">Editar</button>
+                <button type="button" id="btn-volver" class="disabled btn-black">Volver</button>
             </div>
         </div>
     </div>
