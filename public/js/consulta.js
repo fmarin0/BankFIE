@@ -36,7 +36,7 @@ function getTableLoans(){
 
 cerrar.addEventListener('click', () => { 
     modal.style.display = 'none'; 
-    content.innerHTML   = '';
+    desglose.innerHTML   = '';
 });
 
 getTableLoans();

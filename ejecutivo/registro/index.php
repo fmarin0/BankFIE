@@ -52,15 +52,15 @@
                                 <label for="codPostal">Código postal</label>
                             </div>
                             <div class="field">
-                                <input type="text"   name="municipio" id="municipio" >
+                                <input type="text"   name="municipio" id="municipio" disabled>
                                 <label for="municipio">Municipio</label>
                             </div>
                             <div class="field">
-                                <input type="text"   name="estado" id="estado" >
+                                <input type="text"   name="estado" id="estado" disabled>
                                 <label for="estado">Estado</label>
                             </div>
                             <div class="field">
-                                <input type="text" name="domicilio" id="domicilio">
+                                <input type="text" name="domicilio" id="domicilio" >
                                 <label for="domicilio">Domicilio</label>
                             </div>
                         </section>
