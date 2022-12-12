@@ -5,9 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport"     content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="../public/img/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet"    href="../public/css/mainEjecutivo.css">
-    <link rel="stylesheet"    href="../public/css/modal.css">
+    <link rel="shortcut icon" href="./../public/img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet"    href="./../public/css/ejecutivo.css">
     <title>Panel del ejecutivo</title>
 </head>
 <body>
@@ -15,12 +14,18 @@
     <section>
         <div class="body-content">
             <div class="content-tittle">
-                <h1>¡Hola, <?php echo $usuario['name']; ?>!</h1>
+                <h1 class="mb-1 mt-1">¡Hola, <?php echo $user['name']; ?>!</h1>
             </div>
             <div class="content-customers">
                 <p id="respuesta"></p>
                 <div>
-                    <h2>Cartera de clientes</h2>
+                    <h2 class="text-center mb-1">Cartera de clientes</h2>
+                </div>
+                <div class="content-busqueda">
+                    <div class="search-box">
+                        <button class="btn-search"><i class="fas fa-search"></i></button>
+                        <input type="text" class="input-search" placeholder="Buscar..." id="busqueda">
+                    </div>
                 </div>
                 <div class="body-table">
                     <table>

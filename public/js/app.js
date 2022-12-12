@@ -22,10 +22,15 @@ const Domicilio = document.getElementById('domicilio');
 const Municipio = document.getElementById('municipio');
 const CodPostal = document.getElementById('codPostal')
 const Key       = document.getElementById('key');
+const Busqueda  = document.getElementById('busqueda');
 
-function getTableClients(){
-     let datos = true;
- 
+function getTableClients(buscar){
+     let datos = new FormData();
+
+     if (Busqueda.value != '') {
+          datos.append('busqueda', buscar);
+     }
+
      fetch('../../includes/tablaDeClientes.php', {
          method: "POST",
          body: datos
@@ -210,5 +215,14 @@ document.addEventListener("keydown", function (e) {
           modal.style.display = 'none'; 
           defaultModal(); 
           limpiarClassError();
+     }
+});
+
+Busqueda.addEventListener('keyup', () => {
+     if (Busqueda.value != '') {
+          console.log(Busqueda.value );
+          getTableClients(Busqueda.value);
+     } else {
+          getTableClients('');
      }
 });

@@ -1,18 +1,11 @@
 <?php
-    require 'db.php';
 
-    $connect = new DB();
-    
-    global $connect;
-    
+    require 'validaciones.php';    
     $array = array();
     
-    function auntheticate($email, $password){
-        
-        global $connect;
-        
+    function auntheticateEjecutivo($email, $password){
         try {
-           $query = $connect -> connect() -> prepare('SELECT * FROM users WHERE email = :email');
+           $query = prepararConsulta('SELECT * FROM users WHERE email = :email');
            $query -> execute(['email' => $email]);
 
            if ($query -> rowCount() == 1) {
@@ -20,7 +13,31 @@
                
                if (password_verify($password, $client['pass'])) {
                     session_start();
-                    $_SESSION['user'] = $client['id'];
+                    $_SESSION['user'] = $client['num_client'];
+                    return $client['role'];
+                }
+
+               return NULL;
+           }
+           return NULL;
+        } catch (PDOException $e) {
+           echo $e;
+           return NULL;
+        }    
+    }
+
+    function auntheticateCliente($email, $password){
+        try {
+           $query = prepararConsulta('SELECT * FROM clientes WHERE email = :email');
+           $query -> execute(['email' => $email]);
+
+           if ($query -> rowCount() == 1) {
+               $client = $query -> fetch(PDO::FETCH_ASSOC);
+               
+               if (password_verify($password, $client['pass'])) {
+                    session_start();
+                    $_SESSION['user'] = $client['NoCuenta'];
+
                     return $client['role'];
                 }
 
@@ -38,16 +55,15 @@
             array_push($array, 'Asegurate que hayas ingresado los datos correctamente.');
         }
 
-        $results = auntheticate($_POST['email'],$_POST['password']);
+        if ($results = auntheticateEjecutivo($_POST['email'],$_POST['password']) === NULL) {
+            $results = auntheticateCliente($_POST['email'],$_POST['password']);
 
-        if ($results === NULL) {
-            array_push($array, 'El correo y/o contraseña es incorrecto.');
+            if($results === NULL){ array_push($array, 'El correo y/o contraseña es incorrecto.'); return;}
+
+            header('Location: cliente');
+
         } else {
-            if ($results === 'admin') {
-                header('Location: ejecutivo');
-            } else {
-                header('Location: cliente');
-            }
+            header('Location: ejecutivo');
         }
     }
 ?>

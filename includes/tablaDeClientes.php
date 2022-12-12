@@ -1,43 +1,55 @@
 <?php
 
-    require 'db.php';
-    session_start();    
-    
-    function prepararConsulta($sql){
-        $conexion = new DB(); 
-        $nuevaConsulta = $conexion -> connect() -> prepare($sql);
+    require 'validaciones.php';
+    session_start();
 
-        return $nuevaConsulta;
+    
+
+    function escape($string){
+        $res = '';
+        for($i = 0; $i < strlen($string); ++$i) {
+            $char = $string[$i];
+            $ord = ord($char);
+
+            if($char !== "'" && $char !== "\"" && $char !== '\\' && $ord >= 32 && $ord <= 126)
+                $res .= $char;
+            else
+                $res .= '\\x' . dechex($ord);
+        }
+
+        return $res;
     }
 
-    function TablaClientes(){
-        $prefijo = numeroDelEjecutivo();
+    function TablaClientes($busqueda){
+        $prefijo = $_SESSION['user'][0];
+        $error   = '<td colspan="5">No hay clientes aún.</td>';
+        
+        if ($prefijo === NULL) { return '<td colspan="5">Error al cargar la tabla.</td>'; }
+        
+        $sql = "SELECT * FROM clientes WHERE NoCuenta LIKE '" . $prefijo ."%' ORDER BY status";
+        $informacion = '';
 
-        if ($prefijo === NULL) { return "Error al cargar la tabla."; }
+        if ($busqueda !== NULL) {
+            $error   = '<td colspan="5">No hay clientes que coincidan con sus criterios de busqueda.</td>';
+            $q = escape($busqueda);
+            $sql = "SELECT * FROM clientes WHERE NoCuenta LIKE '". $prefijo ."%' AND name LIKE '%". $q ."%' ORDER BY status";   
+        }
 
         try {
-            $consulta = prepararConsulta("SELECT * FROM clientes WHERE NoCuenta LIKE '" . $prefijo ."%' ORDER BY status");
+            $consulta = prepararConsulta($sql);
             $consulta -> execute();
             $clientes = $consulta -> fetchAll(PDO::FETCH_OBJ); 
-
-            $informacion = '';
+            
+            if (count($clientes) <= 0) { return $error; }
 
             foreach ($clientes as $cliente) {
-                if ($cliente -> status === 'inactivo')
-                    $informacion .= '
-                             <tr>
-                                <td>'. $cliente -> id    .'</td>
-                                <td>'. $cliente -> name  .'</td>
-                                <td><span class="'.$cliente -> status.'"><i class="fa-solid fa-circle"></i></span></td>
-                                <td class="text-center">--</td>
-                                <td class="text-center">--</td>
-                            </tr>';
-                else    
-                    $informacion .= '
+                $status = $cliente -> status === 'inactivo' ? 'inactivo' : 'activo';
+                       
+                $informacion .= '
                             <tr>
                                 <td>'. $cliente -> id    .'</td>
                                 <td>'. $cliente -> name  .'</td>
-                                <td><span class="'.$cliente -> status.'"><i class="fa-solid fa-circle"></i></span></td>
+                                <td><span class="'.$status.'"><i class="fa-solid fa-circle"></i></span></td>
                                 <td>
                                     <form action="#" id="formEditar'. $cliente -> id .'">
                                         <input type="hidden" name="editar" value="'.$cliente -> id .'">
@@ -61,31 +73,11 @@
         }
     }
 
-    function numeroDelEjecutivo(){
-        try {
-            $consulta = prepararConsulta('SELECT num_client FROM users WHERE id = :id');
-            $consulta -> execute(['id' => $_SESSION['user']]);
+    $buscar = NULL;
 
-            if ($consulta -> rowCount() == 1) {
-                $cliente = $consulta -> fetch(PDO::FETCH_ASSOC);
-
-                return $cliente['num_client'][0];
-            }
-
-            return NULL;
-
-        } catch (PDOException $e) {
-            echo $e;
-            return NULL;
-        }
+    if (isset($_POST['busqueda']) && !empty($_POST['busqueda'])) {
+        $buscar = $_POST['busqueda'];
     }
 
-    function separPorEspacios($cadena){
-        $separador = " ";
-        $cadenaSeparada = explode($separador, $cadena);
-
-        return $cadenaSeparada;
-    }
-
-    echo json_encode(TablaClientes());
+    echo json_encode(TablaClientes($buscar));
 ?>

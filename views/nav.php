@@ -1,14 +1,14 @@
-<nav class="menu" tabindex="0">
-	<div class="smartphone-menu-trigger"></div>
-  <header class="avatar">
-		<img src="http://bankfie.com/public/img/<?php echo $user['img_client']; ?>">
-    <h2><?php echo $user['name']; ?></h2>
-  </header>
-	<ul>
-    <a href="http://bankfie.com/ejecutivo">                <li tabindex="0" class="icon-dashboard">               <span>Inicio       </span></li></a>
-    <a href="http://bankfie.com/ejecutivo/registro">       <li tabindex="0" class="icon-fa-duotone fa-user-plus"> <span>Registro     </span></li></a>
-    <a href="http://bankfie.com/ejecutivo/prestamos">      <li tabindex="0" class="icon-customers">               <span>Prestamos    </span></li></a>
-    <a href="http://bankfie.com/ejecutivo/transacciones">  <li tabindex="0" class="icon-users">                   <span>Transacciones</span></li></a>
-    <a href="http://bankfie.com/includes/cerrarSesion.php"><li tabindex="0" class="icon-settings">                <span>Cerrar sesion</span></li></a>
-  </ul>
+<nav>
+    <div class="content-img">
+        <a href="http://bankfie.com/ejecutivo"><img src="../../public/img/logo.png" alt="Logo bankfie"></a>
+    </div>
+    <div class="content-nav">
+        <p onclick="openMenu()"><i class="fa-solid fa-bars"></i></p>
+        <div class="body-menu" id="body-menu">
+            <a href="http://bankfie.com/cliente">                                                        <p class="icon"><i class="fa-light fa-house"></i>               </p><p class="text">Inicio        </p></a>
+            <a href="http://bankfie.com/libs/AccountStatementsPHP/accountStatements.php" target="_blank"><p class="icon"><i class="fa-sharp fa-solid fa-file"></i>       </p><p class="text">Estado De Cuenta </p></a>
+            <a href="http://bankfie.com/includes/cerrarSesion.php">                                      <p class="icon"><i class="fa-light fa-xmark-to-slot"></i>       </p><p class="text">Cerrar sesion </p></a>
+        </div>
+    </div>
+    
 </nav>

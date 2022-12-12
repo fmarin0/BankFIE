@@ -22,6 +22,9 @@
   box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4); 
   color:#000;
 }
+
+/* MODAL-HEAD */
+
 .head {
   display: flex;
   color: #fff;
@@ -48,156 +51,10 @@
       font-size: 20px; 
 } .closed i:hover { color: #f20805; }
 
-/*/////////////////////////////////////////////////////*/
-
-/* MODAL BODY - INICIO */
-
-.btn-enviar { margin: 10px 0 0!important; }
-.bg-editar { background-color: #609e3e;}
-.disabled {display: none;}
+/* MODAL BODY */
 
 .modal-body {
   background-color: #fff; 
   border-radius: 10px;
   padding: 10px;
 }
-
-.align-center {
-  display: grid; 
-}.align-center input,label {
-  display: block;
-  text-align: center;
-  margin-top: 10px;
-} .align-center 
-    input:disabled {
-      border-style: none;
-      color: #2e9c8c;
-      font-size: medium;
-}.align-center
-    input:enabled {
-      background-color: #5f9a40;
-      color: #fff;
-      font-size: medium;
-      border-radius: 10px;
-      border-style: none;
-      padding: 5px;
-}.align-center 
-    input:active {
-      border-style: none;
-      border-color: #cc0605!important;
-}
-
-.align-right {
-  display: flex;
-  justify-content: right;
-}.align-right 
-  button {
-    cursor: pointer;
-    background-color: #609E3F;
-    padding: 10px 30px;
-    border-radius: 10px;
-    color: #fff;
-    font-weight: bold;
-    border-style: none;
-    margin: 10px;
-}
-
-.avatar {
-  display: grid;
-  width: 100%;
-  max-height: 100px;
-  justify-content: center;
-  align-items: center;
-  background-repeat: no-repeat;
-  background-position: 50%;
-  border-radius: 50%;
-  background-size: 100% auto;
-}.avatar 
-  img {
-    width:  120px;
-    height: 120px;
-    border-radius: 50%;
-}
-
-.columnas {
-  display: flex;
-  justify-content: center;
-  margin-top: 10px;
-} 
-.columana { 
-  display: inline-grid; 
-  margin-left: 2%;
-}.columana 
-  input,label {
-    display: block;
-    text-align: center;
-    margin-top: 10px;
-}.columana
-    input:disabled {
-      border-style: none;
-      color: #2e9c8c;
-}.columana 
-  input:enabled {
-    background-color: #5f9a40;
-    color: #fff;
-    border-radius: 10px;
-    border-style: none;
-    padding: 5px;
-}
-
-.btn-black {
-  background-color: #000!important;
-  padding: 10px 30px;
-  border-radius: 10px;
-  color: #fff;
-  font-weight: bold;
-  border-style: none;
-  margin-top: 10px;
-}
-
-
-form input[type=file] { visibility: hidden; height: 0; width: 0; }
-
-.btn-edit-img {
-  margin-bottom: 0;
-  position: relative;
-  font-size: medium;
-  top: -40px;
-  padding-left: 95px; 
-}.btn-edit-img 
-  span {
-    padding: 5px;
-    border-radius: 10px;
-    background-color: #5f9a40;
-    color: #fff;
-    cursor: pointer; 
-}
-
-.error {
-  border: solid 2px red!important;
-}
-
-.mensage-error {
-  background-color: #cc0605;
-  margin-bottom: 10px;
-  border-radius: 10px;
-  width: 100%;
-  text-align: center;
-}
-
-.mensage-correcto {
-  background-color: #5f9a40;
-  margin-bottom: 10px;
-  border-radius: 10px;
-  width: 100%;
-  text-align: center;
-}
-
-.respuestas-editar {
-  display: flex;
-  justify-content: center;
-  border-radius: 10px;
-  color: #fff;
-}
-
-/* MODAL BODY - FINAL */

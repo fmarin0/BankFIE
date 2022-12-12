@@ -39,7 +39,6 @@
                         <div class="input">
                             <input type="submit" value="Iniciar Sesión" id="send" >
                         </div>
-                        <p class="olvidar">Olvidaste tú contraseña?<a href="#"> Haz Click Aquí</a></p>
                     </form>
                 </div>
             </div>

@@ -1,15 +1,6 @@
 <?php 
 
-    require 'db.php';
-    session_start();
-    define('URL-IMG', '/var/www/BankFIE/public/uploads/');    
-
-    function prepararConsulta($sql){
-        $conexion = new DB(); 
-        $nuevaConsulta = $conexion -> connect() -> prepare($sql);
-
-        return $nuevaConsulta;
-    }
+    require 'validaciones.php';
 
     function calcularEdad($fena){
         $nacimiento = new DateTime($fena);
@@ -19,58 +10,19 @@
         return $diferencia->format("%y");
     }
 
-    function validarDatos($datos){
-        $caracteresValidos = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_#@.áéíóú ";
-        $respuesta = [];
+    function gurdarNuevaImagen($imagen){
+        $origen  = $imagen['tmp_name'];
+        $destino = constant('URL-IMG') . basename($imagen['name']);
 
-        foreach ($datos as $dato) {
-            if(empty($_POST[$dato]))
-                if ($dato == "name") { $respuesta += [$dato => "El campo <b>nombre</b> esta vacio."];} 
-                else {$respuesta += [$dato => "El campo <b>" . $dato . "</b> esta vacio."];}
-            for ($j=0; $j < strlen($_POST[$dato]); $j++){
-                if (strpos($caracteresValidos, substr($_POST[$dato],$j,1)) === false)
-                    if ($dato == "name") { $respuesta += [$dato => "El campo <b>nombre</b> tiene un caracter invalido."]; }
-                    else { $respuesta += [$dato => "El campo <b>" . $dato . "</b> tiene un caracter invalido."]; }
-            }
+        if(move_uploaded_file($origen, $destino)){
+            return true;
         }
-
-        return $respuesta;
     }
 
-    function validarImagen($img){
-        $respuesta = [];
-
-        $archivo = basename($img["name"]);
-        $tipoArchivo = strtolower(pathinfo($archivo, PATHINFO_EXTENSION));
-        
-        if($tipoArchivo != "jpg"){
-            $respuesta += ["img" => "El campo <b>img</b> solo puede aceptar formato jpg."];
+    function borrarImgAnterior($archivo){
+        if (existeArchivo($archivo)){
+            unlink(constant('URL-IMG') . $archivo);
         }
-
-        $checarSiImagen = getimagesize($img["tmp_name"]);
-
-        if($checarSiImagen === true){ 
-            $respuesta += ["img" => "Hubo un error al ingresar el dato de <b>img</b>."];
-         }
-
-        if ($img["size"] > 500000) { 
-            $respuesta += ["img" => "La imagen es dasiado grande."];
-        }
-
-        return $respuesta;
-    }
-
-    function mostrarImagen($id){
-        try {
-            $query = prepararConsulta('SELECT imgClient FROM clientes WHERE id = :id');
-            $query -> execute(['id' => $id]); 
-            $img_client = $query -> fetch(PDO::FETCH_ASSOC);
-
-            return $img_client['imgClient'];
-        } catch (PDOException $e){
-            echo $e;
-            return false;
-        }        
     }
 
     if(isset($_POST['eliminar'])){
@@ -115,21 +67,18 @@
 
 
     if (isset($_POST['key'])) {
-        $imgClient = mostrarImagen($_POST['key']);
-        $info = validarDatos(['name', 'CURP', 'fena', 'estado', 'domicilio', 'municipio', 'codPostal']);
+        $imgClient = consultarImg($_POST['key']);
+        $info = validacionGeneral(['name', 'CURP', 'fena', 'estado', 'domicilio', 'municipio', 'codPostal']);
 
-        if (isset($_FILES['img'])) {
-            $info += validarImagen($_FILES['img']);
+        if (existeFILES('img')) {
+            $info += validacionGeneralImg(['img']);
 
             if (empty($info)) {
-                if ($_FILES['img']['name'] != $imgClient) {
-                    if (file_exists(constant('URL-IMG') . $imgClient)){
-                        unlink(constant('URL-IMG') . $imgClient);
-                    }
+                if (validarNuevaImg($_POST['key'],$_FILES['img']['name'])) {
 
-                    $archivo = constant('URL-IMG') . basename($_FILES['img']['name']);
-            
-                    if(move_uploaded_file($_FILES['img']['tmp_name'], $archivo)){
+                    borrarImgAnterior($imgClient);
+
+                    if(gurdarNuevaImagen($_FILES['img'])){
                         $imgClient = $_FILES['img']['name'];
                     }
                 }

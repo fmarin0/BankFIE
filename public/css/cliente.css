@@ -1,0 +1,36 @@
+.modal-content {
+    padding: 10px;
+}
+
+.modal-content table {
+    margin: 0 auto;
+}
+
+.modal-content th {
+    background-color: #5f9a40;
+    border-color: #000;
+}
+
+.modal-content td {
+    background-color: #fff;
+    color: #000;
+    border-color: #000;
+
+}
+
+.text-right {
+    text-align: right;
+}
+
+
+.pagado {
+    color: #00a135!important;
+}
+
+.pendiente {
+    color: #e5be01!important;
+}
+
+.atrasado {
+    color: #cc0605!important;
+}
