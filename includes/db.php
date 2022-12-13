@@ -9,9 +9,9 @@
 
         public function __construct(){
             $this -> host     = 'localhost';
-            $this -> db       = 'basededatos';
+            $this -> db       = 'database';
             $this -> user     = 'root';
-            $this -> password = '1234';
+            $this -> password = '12015';
             $this -> charset  = 'utf8mb4';
         }
 

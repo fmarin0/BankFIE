@@ -110,3 +110,7 @@ body {
 #email {
     text-transform: lowercase;
 }
+
+.text-left {
+    text-align: left!important;
+}

@@ -31,7 +31,7 @@
                                 <td class="text-center">
                                     <form method="post" id="FormPagar'.$prestamo -> NoPrestamo .'">
                                         <input  type="hidden" name="pagar" value="'.$prestamo -> NoPrestamo .'">
-                                        <button type="button" class="pagar" onclick="Eliminar('.$prestamo -> NoPrestamo .')"><i class="fa-duotone fa-dollar-sign"></i></button>
+                                        <button type="button" class="pagar" onclick="modalOpen2('.$prestamo -> NoPrestamo .')"><i class="fa-duotone fa-dollar-sign"></i></button>
                                     </form>
                                 </td>
                             </tr>'; 

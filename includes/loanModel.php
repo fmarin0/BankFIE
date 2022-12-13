@@ -1,6 +1,7 @@
 <?php 
     require 'validaciones.php';
-
+    require '../libs/PHPMailer/email.php';
+    
     class LoanModel {
         private $NoCuenta         ;
         private $NoPrestamo       ;
@@ -28,6 +29,11 @@
             }catch(PDOException $e){
                 return NULL;
             }
+        }
+
+        function enviarFelicitacion($NoCuenta, $NoPrestamo){
+            $sendMail = new Email();
+            $sendMail -> sendMail(consultarEmailPorNoCuenta($NoCuenta), consultarName($NoCuenta), "Felicidades", "¡Hola  " . consultarName($NoCuenta) . "! Muchas felicidades has pagado el total de tu prestamo " . $NoPrestamo . ".");
         }
 
         function getDesglose($NoPrestamo){
@@ -59,15 +65,13 @@
                     
                     if ($this -> differenceDate($fechaInversa)) {
                         $style = 'atrasado';
-                        $this -> interesAcumulado = $this -> calInteres($this -> ceros($dia), $this -> ceros($mes), $año);
+                        $this -> interesAcumulado += $this -> calInteres($this -> ceros($dia), $this -> ceros($mes), $año);
                     } else if($this -> differenceDate($fechaInversa) === NULL) {
                         $style = 'pendiete';
                     } else {
                         $style = '';
                     }
-                }
-
-                
+                }         
 
                 $data .= '
                     <tr>
@@ -91,6 +95,115 @@
             '; 
             
             return $data;
+        }
+
+        function pagarPrestamo($NoPrestamo,$interes, $cantidad){
+            $this -> getPrestamo($NoPrestamo);
+            $this -> cuotaFija();
+            $NoPago = $this -> calcularPagosRealizados() !== NULL ? $this -> calcularPagosRealizados() : 0;
+
+            try {
+                $query = prepararConsulta("UPDATE prestamos SET interesAcumulado = :interesAcumulado, pagado = :pagado WHERE NoPrestamo = :NoPrestamo");
+                $query -> execute([
+                    "NoPrestamo"       => $NoPrestamo, 
+                    "interesAcumulado" => $interes,
+                    "pagado"           => ($cantidad - $interes) + $this -> pagado,
+                ]);
+
+                if ($NoPago + 1 == $this -> plazo) {
+                    $this -> pagarTotalPrestamo($NoPrestamo);
+                }
+
+                return true;
+
+            } catch(PDOException $e){
+                echo $e;
+                return false;
+            }
+        }
+
+        function pagarTotalPrestamo($NoPrestamo){
+            $this -> getPrestamo($NoPrestamo);
+            
+            try {
+                $query = prepararConsulta("UPDATE prestamos SET status = 'pagado' WHERE NoPrestamo = :NoPrestamo");
+                $query -> execute(['NoPrestamo' => $NoPrestamo]);
+
+                if ($this -> enviarFelicitacion($this -> NoCuenta, $NoPrestamo)) {
+                    return true;
+                }
+
+            } catch(PDOException $e){
+                echo $e;
+                return false;              
+            }
+        }
+
+        function pagos($NoPrestamo){
+            $this -> getPrestamo($NoPrestamo);
+            $this -> dateCal();
+            $this -> cuotaFija();
+            $data = '';
+
+            $año = $this -> separateDate(2);
+            $mes = $this -> separateDate(5);
+            $dia = $this -> separateDate(8);
+
+            for ($i=0; $i < $this -> plazo; $i++) { 
+
+                if ($mes < 12) { 
+                    $mes += 1;
+                } else {
+                    $mes =  1;
+                    $año += 1;
+                }
+
+                $pagos = $this -> calcularPagosRealizados();
+
+                if ($pagos != NULL && $i <= $pagos - 1) {
+                } else {
+                    $fechaInversa = $this -> ceros($dia) . '-' . $this -> ceros($mes) . '-' .  $año;
+                    
+                    if ($this -> differenceDate($fechaInversa)) {
+                        if ($pagos != NULL && $i == $pagos) {
+                            $interes = $this -> calInteres($this -> ceros($dia), $this -> ceros($mes), $año);
+                        } else if ($pagos === NULL && $i == 0) {
+                            $interes = $this -> calInteres($this -> ceros($dia), $this -> ceros($mes), $año);
+                        }
+
+                        $this -> interesAcumulado += $this -> calInteres($this -> ceros($dia), $this -> ceros($mes), $año);
+                    }
+                }
+
+                $NoPago = $pagos === NULL ? 0 : $pagos ;
+
+                $data = [
+                    "mensualidad"    => $this -> decimales($this -> cuota),
+                    "NoMensualidad"  => $NoPago,
+                    "interesTotal"   => $this -> decimales($this -> interesAcumulado),
+                    "interesMensual" => $this -> decimales($interes),
+                    "total"          => $this -> decimales($this -> cuota * ($this -> plazo - $pagos)),
+                    "saldo"          => $this -> decimales($this -> getSaldo($this -> NoCuenta)),
+                    "plazo"          => $this -> plazo
+                ];
+            }
+
+            return $data;
+        }
+
+
+        function getSaldo($NoCuenta){
+            try {
+                $query = prepararConsulta('SELECT saldo FROM cuentas WHERE NoCuenta = :NoCuenta');
+                $query -> execute(['NoCuenta' => $NoCuenta]); 
+                $saldo = $query -> fetch(PDO::FETCH_ASSOC);
+            
+                return $saldo['saldo'];
+                
+            } catch (PDOException $e){
+                echo $e;
+                return false;
+            } 
         }
 
         function dateCal(){
@@ -182,11 +295,12 @@
         function calcularPagosRealizados(){
             $pagos = null;
 
-            if ($this -> pagado/$this -> cuota != 0) {
+            if ($this -> pagado != 0) {
                 $pagos = $this -> pagado/$this -> cuota;
+                $pagos = ceil($pagos);
             }
 
-            return ceil($pagos);
+            return $pagos;
 
         }
 

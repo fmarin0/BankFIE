@@ -34,3 +34,53 @@
 .atrasado {
     color: #cc0605!important;
 }
+
+input[type="radio"]{
+    visibility: hidden;
+    width: 0;
+    height: 0;
+}
+
+.content-right{
+    display: flex;
+    justify-content: right;
+}
+
+
+#btn-submit {
+    cursor: pointer;
+    background-color: #609E3F;
+    padding: 10px 30px;
+    border-radius: 10px;
+    color: #fff;
+    font-weight: bold;
+    border-style: none;
+    margin-top: 10px;
+}
+
+.label {
+    background-color: #fff;
+    padding: 10px;
+    cursor: pointer;
+    border:solid 1px black;
+    cursor: pointer;
+}
+
+input[type="radio"]:checked  + label {
+    background-color:#609E3F;
+    color: #fff;
+}
+
+.content-radios {
+    display: flex;
+    margin-bottom:10px ;
+}
+
+.content-radios label {
+    width: 50%;
+}
+
+#respuestas-pagos {
+    color: #fff;
+    list-style: none;
+}
